@@ -1,8 +1,5 @@
-import java.awt.Dimension;
-import java.awt.Graphics;
-
-import javax.swing.JFrame;
-import javax.swing.JPanel;
+import java.awt.*;
+import javax.swing.*;
 
 public class Main extends JFrame {
     public static void main(String[] args) throws Exception {
@@ -12,13 +9,19 @@ public class Main extends JFrame {
 
     class Canvas extends JPanel {
       Grid grid = new Grid();
+      MouseTrail mouseTrail = new MouseTrail();
       public Canvas() {
         setPreferredSize(new Dimension(720, 720));
       }
 
       @Override
       public void paint(Graphics g) {
+        Point mousePos = getMousePosition();
+        if(mousePos != null){
+          mouseTrail.push(mousePos);
+        }
         grid.paint(g, getMousePosition());
+        mouseTrail.draw(g);
       }
     }
 
