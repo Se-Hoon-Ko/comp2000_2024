@@ -21,6 +21,12 @@ public class MouseTrail {
         System.out.println();
     }
     public void push(Point p) {
+        if (size > 0) {
+            int lastIndex = (rear == 0) ? ARRMAX - 1 : rear - 1;
+            if (mPointsArr[lastIndex] != null && mPointsArr[lastIndex].equals(p)) {
+                return;
+            }
+        }
         mPointsArr[rear] = p;
         rear = (rear + 1) % ARRMAX;
     
