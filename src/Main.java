@@ -1,32 +1,38 @@
-import javax.swing.*;
-import java.awt.*;
+import java.awt.Dimension;
+import java.awt.Graphics;
+
+import javax.swing.JFrame;
+import javax.swing.JPanel;
 
 public class Main extends JFrame {
-    static final int FRAME_HEIGHT = 720;
-    static final int FRAME_WIDTH = 720;
-
-    public static void main(String[] args) {
-        new Main();
-    }
-
-    public Main() {
-        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        Canvas canvas = new Canvas();
-        this.setContentPane(canvas);
-        this.pack();
-        this.setVisible(true);
+    public static void main(String[] args) throws Exception {
+      Main window = new Main();
+      window.run();
     }
 
     class Canvas extends JPanel {
-        Grid grid;
-        public Canvas() {
-            setPreferredSize(new Dimension(FRAME_HEIGHT, FRAME_WIDTH));
-            grid = new Grid(10, Cell.SIZE);
-        }
+      Grid grid = new Grid();
+      public Canvas() {
+        setPreferredSize(new Dimension(720, 720));
+      }
 
-        @Override
-        public void paintComponent(Graphics g) {
-            grid.paint(g);
-        }
+      @Override
+      public void paint(Graphics g) {
+        grid.paint(g, getMousePosition());
+      }
+    }
+
+    private Main() {
+      this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+      Canvas canvas = new Canvas();
+      this.setContentPane(canvas);
+      this.pack();
+      this.setVisible(true);
+    }
+
+    public void run() {
+      while(true) {
+        repaint();
+      }
     }
 }
